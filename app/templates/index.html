@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+    <title>{{title}}</title>
+    <meta name="keywords" content="{{seo_keywords|safe}}">
+    <meta name="author" content="{{author}}">
+    <meta name="description" property="og:description" content="{{description}}">
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="{{twitter_username}}">
+    <meta name="twitter:title" content="{{title}}">
+    <meta name="twitter:description" content="{{description}}">
+    <meta name="twitter:creator" content="{{twitter_username}}">
+    <meta name="twitter:image" content="{{seo_thumbnail}}">
+
+    <!-- Open Graph data -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{title}}" />
+    <meta property="og:description" content="{{description}}" />
+    <meta property="og:url" content="{{site_url}}" />
+    <meta property="og:site_name" content="{{site_name}}" />
+    <meta property="article:publisher" content="{{article_publisher}}" />
+    <meta property="article:author" content="{{article_author}}" />
+    <meta property="fb:app_id" content="{{fb_id}}" />
+    <meta property="og:image" content="{{seo_thumbnail}}" />
+    <meta property="og:image:secure_url" content="{{seo_thumbnail}}" />
+
+    <link rel="shortcut icon" type="image/png" href="{{favicon}}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header-bar-menu.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="nav-container"></div>
+    <div class="parent-main-container">
+        <div class="promotion-video-iframe-container">
+            <iframe src="/promotion-video/" frameborder="0" width="100%" height="100%"></iframe>
+        </div>
+        <div class="featured-work-blogs-container">
+            <span class="featured-work-blogs-label">Featured Work</span>
+            <div class="featured-work-divider"></div>
+            <div class="featured-work-blogs">
+                <div class="card-container">
+                    {% for blog in blogs %}
+                    {% if blog.featured_board %}
+                    <div class="card">
+                        <a href="/blog/{{blog.blog_id}}">
+                            <div class="thumbnail-container">
+                                <img src="{% static 'images/default_thumb.png' %}" data-src="{{blog.small_thumbnail}}"
+                                    class="thumbnail" />
+                            </div>
+                        </a>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="findout-more-button">
+                    <span class="read-more-label">READ MORE</span>
+                </div>
+            </div>
+        </div>
+        <div class="youtube-video-container">
+            <span class="youtube-video-label">Latest Youtube Video</span>
+            <div class="divider"></div>
+            <div class="youtube-video-preview-container">
+                <div class="youtube-video-parent-container">
+                    <iframe frameborder="0" class="youtube-video"></iframe>
+                </div>
+                <div class="youtube-video-content">
+                    <div class="youtube-video-watch-button">
+                        <span class="watch-on-label">WATCH ON YOUTUBE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="about-container">
+            <div class="about-background-container">
+                <img src="" alt="" class="creator-profile-image">
+                <span class="about-background-message"></span>
+                <div class="creator-profile-container">
+                    <p class="creator-name"></p>
+                    <p class="creator-info"> / CREATOR OF HACKBOTONE</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-container">
+            <iframe src="/footer/" frameborder="0" width="100%" scrolling="no"></iframe>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/constants.js' %}"></script>
+    <script src="{% static 'js/fetchContractor.js' %}"></script>
+    <script src="{% static 'js/nav_bar.js' %}"></script>
+    <script src="{% static 'js/image-loader.js' %}"></script>
+    <script>
+        var findoutMoreButton = document.querySelector('.findout-more-button');
+        findoutMoreButton.addEventListener('click', function (e) {
+            window.location.href = BLOGS_PAGE;
+        })
+
+        fetchApi(YOUTUBE_VIDEO_API, 'GET', null).then(data => {
+            var youtubeVideo = document.querySelector('.youtube-video');
+            youtubeVideo.src = data.embed_link;
+
+            var youtubeVideoWatchButton = document.querySelector('.youtube-video-watch-button');
+            youtubeVideoWatchButton.addEventListener('click', function (e) {
+                window.location.href = data.youtube_link;
+            })
+        })
+        fetchApi(PORTFOLIO, 'GET', null).then(data => {
+            var profilePicture = data.profile_picture;
+            var profileName = data.name;
+            var promotionMessage = data.promotion_message;
+
+            var creatorProfile = document.querySelector('.creator-profile-image');
+            creatorProfile.src = profilePicture;
+            creatorProfile.addEventListener('click', function (e) {
+                window.location.href = '/about';
+            })
+
+            var creatorName = document.querySelector('.creator-name');
+            creatorName.innerHTML = profileName;
+
+            creatorName.addEventListener('click', function (e) {
+                window.location.href = '/about';
+            })
+
+            var message = document.querySelector('.about-background-message');
+            message.innerHTML = promotionMessage;
+        })
+    </script>
+</body>

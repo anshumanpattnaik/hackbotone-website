@@ -1,0 +1,17 @@
+[
+    {
+        "label": "Home",
+        "path": "/",
+        "nav_color": false
+    },
+    {
+        "label": "Blogs",
+        "path": "/blogs/page/1",
+        "nav_color": true
+    },
+    {
+        "label": "About",
+        "path": "/about",
+        "nav_color": true
+    }
+]

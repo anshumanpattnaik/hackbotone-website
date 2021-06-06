@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>HackbotOne | Exploring Application Security & Development</title>
+</head>
+
+<body>
+    <div class="promotion-video-container">
+        <video autoplay muted loop class="promotion-video">
+            <source src="{% static 'video/HackbotOne_Banner.mp4' %}" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+        <div class="promotion-video-overlay"></div>
+        <div class="promotion-info-container">
+            <div class="app-advertisement-container">
+                <span class="hackbotone-banner-label"></span>
+                <div class="banner-tag-line-container"></div>
+                <div class="banner-divider-line"></div>
+                <span class="hackbotone-background-label"></span>
+                <div class="get-started-btn-container">
+                    <span class="get-started-label"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="{% static 'js/constants.js' %}"></script>
+<script src="{% static 'js/fetchContractor.js' %}"></script>
+<script>
+    var bannerLabel = document.querySelector('.hackbotone-banner-label');
+    var bannerTagLineContainer = document.querySelector('.banner-tag-line-container');
+    var hackbotoneBackgroundLabel = document.querySelector('.hackbotone-background-label');
+    var getStartedBtnContainer = document.querySelector('.get-started-btn-container');
+    var getStartedLabel = document.querySelector('.get-started-label');
+
+    if (bannerLabel != undefined) {
+        bannerLabel.style.fontWeight = 'bold';
+        bannerLabel.innerHTML = EXPLORING;
+    }
+
+    var appSecDev = document.createElement('span')
+    appSecDev.setAttribute('class', 'banner-tag-line-label')
+    appSecDev.style.fontWeight = 'bold';
+    appSecDev.style.color = WHITE
+    appSecDev.innerHTML = APP_SEC_SDE;
+
+    if (bannerTagLineContainer != undefined) {
+        bannerTagLineContainer.appendChild(appSecDev);
+    }
+
+    if (hackbotoneBackgroundLabel != undefined) {
+        hackbotoneBackgroundLabel.innerHTML = HACKBOTONE_BACKGROUND;
+    }
+
+    if (getStartedLabel != undefined) {
+        getStartedLabel.innerHTML = LET_GET_STARTED
+        getStartedBtnContainer.addEventListener('click', function (e) {
+            window.open(BLOGS_PAGE);
+        })
+    }
+</script>
+</html>

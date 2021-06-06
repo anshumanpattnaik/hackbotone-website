@@ -1,0 +1,47 @@
+.footer-main-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+    background-color: #212529;
+}
+.social-media-connect {
+    display: flex;
+    height: 3em;
+    align-items: center;
+}
+.fa {
+    font-size: 30px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    margin: 10px 10px;
+    transition: 0.3s;
+}
+.fa:hover {
+    color: #fff;
+}
+.fa-facebook {
+    color: #adb5bd;
+}
+.fa-twitter {
+    color: #adb5bd;
+}
+.fa-linkedin {
+    color: #adb5bd;
+}
+.fa-youtube {
+    color: #adb5bd;
+}
+.fa-github {
+    color: #adb5bd;
+}
+.copyrights-label {
+    font-family: Poppins;
+    font-size: 0.8rem;
+    color: #fff;
+    text-align: center;
+    margin-top: 1.5em;
+}

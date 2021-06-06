@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title>HackbotOne | Exploring Application Security & Development</title>
+</head>
+
+<body>
+    <div class="footer-main-container">
+        <div class="social-media-connect"></div>
+        <span class="copyrights-label"></span>
+    </div>
+</body>
+<script src="{% static 'js/constants.js' %}"></script>
+<script src="{% static 'js/fetchContractor.js' %}"></script>
+<script>
+    fetchApi(PORTFOLIO, 'GET', null).then(data => {
+        var facebook = data.facebook;
+        var twitter = data.twitter;
+        var github = data.github;
+        var youtube = data.youtube;
+        var copyrights = data.copyrights;
+
+        var copyrightsLabel = document.querySelector('.copyrights-label');
+        copyrightsLabel.innerHTML = copyrights;
+
+        let socialMedia = [{
+            "label": "fa fa-facebook",
+            "url": facebook
+        }, {
+            "label": "fa fa-twitter",
+            "url": twitter
+        }, {
+            "label": "fa fa-github",
+            "url": github
+        }, {
+            "label": "fa fa-youtube",
+            "url": youtube
+        }]
+
+        socialMedia.map(item => {
+            var container = document.querySelector('.social-media-connect');
+            var icon = document.createElement('a');
+            icon.setAttribute('class', item.label);
+            icon.href = item.url;
+            icon.target = '_blank';
+            container.appendChild(icon);
+        })
+    })
+</script>
+</html>

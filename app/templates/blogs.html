@@ -1,0 +1,174 @@
+{% load static %}
+{% load date_format %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+    <title>{{title}}</title>
+    <meta name="keywords" content="{{seo_keywords|safe}}">
+    <meta name="author" content="{{author}}">
+    <meta name="description" property="og:description" content="{{description}}">
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="{{twitter_username}}">
+    <meta name="twitter:title" content="{{title}}">
+    <meta name="twitter:description" content="{{description}}">
+    <meta name="twitter:creator" content="{{twitter_username}}">
+    <meta name="twitter:image" content="{{seo_thumbnail}}">
+
+    <!-- Open Graph data -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{title}}" />
+    <meta property="og:description" content="{{description}}" />
+    <meta property="og:url" content="{{site_url}}" />
+    <meta property="og:site_name" content="{{site_name}}" />
+    <meta property="article:publisher" content="{{article_publisher}}" />
+    <meta property="article:author" content="{{article_author}}" />
+    <meta property="fb:app_id" content="{{fb_id}}" />
+    <meta property="og:image" content="{{seo_thumbnail}}" />
+    <meta property="og:image:secure_url" content="{{seo_thumbnail}}" />
+    <link rel="shortcut icon" type="image/png" href="{{favicon}}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/card.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header-bar-menu.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="nav-container"></div>
+    <div class="parent-container">
+        {% if search_page == True %}
+        <div class="search-results-container">
+            {% if blogs|length >= 1 %}
+            <span class="search-results-text">We have found {{blogs|length}} search results for "{{search_text}}"</span>
+            {% else %}
+            <span class="search-results-text">Sorry no results found for "{{search_text}}"</span>
+            {% endif %}
+        </div>
+        {% endif %}
+        <div class="card-container">
+            {% for blog in blogs %}
+            <div class="card">
+                <div class="thumbnail-container">
+                    {% if blog.is_featured %}
+                    <div class="featured">
+                        <span>Featured</span>
+                    </div>
+                    {% endif %}
+                    <img src="{% static 'images/default_thumb.png' %}" data-src="{{blog.small_thumbnail}}"
+                        class="thumbnail" />
+                    <div class="share-container">
+                        <a href="/blog/{{blog.blog_id}}" class="opacity"></a>
+                        <div class="share">
+                            <div class="share-icon-container">
+                                <span class="share-post-label">Share</span>
+                                <span class="bar">|</span>
+                                <a href="{{fb_share}}/{{blog.blog_id}}/" target="_blank">
+                                    <img src="{% static 'images/facebook-solid.png' %}" class="share-icon" />
+                                </a>
+                                <a href="{{tw_share}}/{{blog.blog_id}}/" target="_blank">
+                                    <img src="{% static 'images/twitter-solid.png' %}" class="share-icon" />
+                                </a>
+                                <a href="{{li_share}}/{{blog.blog_id}}/" target="_blank">
+                                    <img src="{% static 'images/linkedin-solid.png' %}" class="share-icon" />
+                                </a>
+                                <a href="{{wh_share}}/{{blog.blog_id}}/" target="_blank">
+                                    <img src="{% static 'images/whatsapp-solid.png' %}" class="share-icon" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="middle">
+                    <a href="/blog/{{blog.blog_id}}" class="title">
+                        <span>{{blog.title}}</span>
+                    </a>
+                    <p class="published-date">By <a href="/about">{{blog.author}}</a> / {{ blog.published_date|parseDateFormat:"%Y-%m-%dT%H:%M:%S.%f%z" }}</p>
+                    <p class="highlights">{{blog.highlights|slice:":160"}}...</p>
+                    <br />
+                </div>
+                <div class="bottom">
+                    <a href="/blog/{{blog.blog_id}}" class="read-more">
+                        <span>READ ARTICLE</span>
+                    </a>
+                    <a href="/blog/{{blog.blog_id}}" class="material-icons">
+                        <span>arrow_right_alt</span>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if search_page == False %}
+        <div class="pagingation-container">
+            <div class="page-numbers">
+                <div class="prev-btn">
+                    <span class="material-icons">west</span>
+                </div>
+                <div class="numbers"></div>
+                <div class="next-btn">
+                    <span class="material-icons">east</span>
+                </div>
+
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="footer-container">
+        <iframe src="/footer/" frameborder="0" width="100%" scrolling="no"></iframe>
+    </div>
+    <!-- Scripts -->
+    <script src="{% static 'js/constants.js' %}"></script>
+    <script src="{% static 'js/fetchContractor.js' %}"></script>
+    <script src="{% static 'js/nav_bar.js' %}"></script>
+    <script src="{% static 'js/image-loader.js' %}"></script>
+    <script>
+        let searchPage = "{{search_page}}".toLowerCase();
+        if (searchPage === 'false') {
+            let total_page = `{{total_pages}}`;
+            let current_page = parseInt(`{{current_page}}`)
+
+            var page_numbers_div = document.querySelector('.numbers');
+            var nextPageBtn = document.querySelector('.next-btn');
+            var prevPageBtn = document.querySelector('.prev-btn');
+
+            if (current_page == 1) {
+                prevPageBtn.style.display = 'none';
+            }
+
+            if (current_page == total_page) {
+                nextPageBtn.style.display = 'none';
+            }
+
+            prevPageBtn.addEventListener('click', function (e) {
+                current_page = current_page - 1;
+                window.location.href = '/blogs/page/' + current_page;
+            })
+
+            nextPageBtn.addEventListener('click', function (e) {
+                current_page = current_page + 1;
+                window.location.href = '/blogs/page/' + current_page;
+            })
+
+            for (var i = 1; i <= total_page; i++) {
+                var page_btn = document.createElement('button');
+                page_btn.setAttribute('id', i);
+                if (current_page == i) {
+                    page_btn.setAttribute('class', 'selected_btn');
+                } else {
+                    page_btn.setAttribute('class', 'deselected_btn');
+                }
+                page_btn.innerText = i;
+                page_btn.addEventListener('click', function (e) {
+                    window.location.href = '/blogs/page/' + parseInt(e.target.id);
+                })
+                page_numbers_div.appendChild(page_btn);
+            }
+        }
+    </script>
+</body>

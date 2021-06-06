@@ -1,0 +1,128 @@
+{% load static %}
+{% load date_format %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+    <title>{{title}}</title>
+    <meta name="keywords" content="{{seo_keywords|safe}}">
+    <meta name="author" content="{{author}}">
+    <meta name="description" property="og:description" content="{{highlights|safe}}">
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="{{twitter_username}}">
+    <meta name="twitter:title" content="{{title}}">
+    <meta name="twitter:description" content="{{highlights|safe}}">
+    <meta name="twitter:creator" content="{{twitter_username}}">
+    <meta name="twitter:image" content="{{seo_thumbnail}}">
+
+    <!-- Open Graph data -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{title}}" />
+    <meta property="og:description" content="{{highlights|safe}}" />
+    <meta property="og:url" content="{{site_url}}" />
+    <meta property="og:site_name" content="{{site_name}}" />
+    <meta property="article:publisher" content="{{article_publisher}}" />
+    <meta property="article:author" content="{{article_author}}" />
+    <meta property="fb:app_id" content="{{fb_id}}" />
+    <meta property="og:image" content="{{seo_thumbnail}}" />
+    <meta property="og:image:secure_url" content="{{seo_thumbnail}}" />
+
+    <link rel="shortcut icon" type="image/png" href="{{favicon}}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header-bar-menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/article-container.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="{% static 'css/prism.css' %}" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js"></script>
+</head>
+
+<body>
+    <div class="nav-container"></div>
+    <div class="article">
+        <div class="header">
+            <p class="title">{{title}}</p>
+            <div class="author">
+                <span class="article-by-label">Article By</span>
+                <a href="/about" class="name">
+                    <span>{{author}}</span>
+                </a>
+            </div>
+            <div class="date">
+                <span class="published"><b>Published: </b>{{ published_date|parseDateFormat:"%Y-%m-%dT%H:%M:%S.%f%z" }}</span>
+                <span class="pipe"><b>|</b></span>
+                <span class="updated"><b>Updated: </b>{{ last_updated_date|parseDateFormat:"%Y-%m-%dT%H:%M:%S.%f%z" }}</span>
+            </div>
+            <div class="date-mobile">
+                <span class="published"><b>Published: </b>{{ published_date|parseDateFormat:"%Y-%m-%dT%H:%M:%S.%f%z" }}</span>
+                <span class="updated"><b>Updated: </b>{{ last_updated_date|parseDateFormat:"%Y-%m-%dT%H:%M:%S.%f%z" }}</span>
+            </div>
+            <div class="share">
+                <span class="share-post-label">Share</span>
+                <span class="bar">|</span>
+                <a href="{{fb_share}}/{{blog_id}}/" target="_blank">
+                    <img src="{% static 'images/facebook-solid.png' %}" class="share-icon" />
+                </a>
+                <a href="{{tw_share}}/{{blog_id}}/" target="_blank">
+                    <img src="{% static 'images/twitter-solid.png' %}" class="share-icon" />
+                </a>
+                <a href="{{li_share}}/{{blog_id}}/" target="_blank">
+                    <img src="{% static 'images/linkedin-solid.png' %}" class="share-icon" />
+                </a>
+                <a href="{{wh_share}}/{{blog_id}}/" target="_blank">
+                    <img src="{% static 'images/whatsapp-solid.png' %}" class="share-icon" />
+                </a>
+            </div>
+        </div>
+        <br /><br />
+        <div class="banner-container">
+            <img src="{% static 'images/large_default_thumbnail.png' %}" data-src="{{thumbnail}}" alt="" loading="eager" class="banner-img">
+        </div>
+        <div class="banner-mobile-container">
+            <img src="{% static 'images/default_thumb.png' %}" data-src="{{small_thumbnail}}" alt="" loading="eager" class="banner-img">
+        </div>
+        <div class="description">{{description|safe}}</div>
+        <div class="tags-container">
+            <div class="tag-container">
+                {% for tag in keywords %}
+                <a href='/search/{{tag}}'class="tag">{{ tag }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% if is_featured %}
+        <div class="featured-article-container">
+            <span class="fetaured-label">Featured</span>
+            <div class="featured-content">{{ featured|safe }}</div>
+        </div>
+        {% endif %}
+        <div class="footer">
+            <div class="creator-container">
+                <img src="" alt="" class="creator-profile-picture">
+                <div class="creator-bio-container">
+                    <span class="creator-name"></span>
+                </div>
+            </div>
+            <div class="about-the-author-container">
+                <span class="about-the-author">ABOUT THE AUTHOR</span>
+                <span class="about-the-author-bio"></span>
+            </div>
+        </div>
+    </div>
+    <div class="footer-container">
+        <iframe src="/footer/" frameborder="0" width="100%" scrolling="no"></iframe>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/constants.js' %}"></script>
+    <script src="{% static 'js/fetchContractor.js' %}"></script>
+    <script src="{% static 'js/nav_bar.js' %}"></script>
+    <script src="{% static 'js/profile.js' %}"></script>
+    <script src="{% static 'js/prism.js' %}"></script>
+    <script src="{% static 'js/image-loader.js' %}"></script>
+</body>

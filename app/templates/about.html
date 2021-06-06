@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+    <title>{{title}}</title>
+    <meta name="keywords" content="{{seo_keywords|safe}}">
+    <meta name="author" content="{{author}}">
+    <meta name="description" property="og:description" content="{{description}}">
+    
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="{{twitter_username}}">
+    <meta name="twitter:title" content="{{title}}">
+    <meta name="twitter:description" content="{{description}}">
+    <meta name="twitter:creator" content="{{twitter_username}}">
+    <meta name="twitter:image" content="{{seo_thumbnail}}">
+    
+    <!-- Open Graph data -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{title}}" />
+    <meta property="og:description" content="{{description}}" />
+    <meta property="og:url" content="{{site_url}}" />
+    <meta property="og:site_name" content="{{site_name}}" />
+    <meta property="article:publisher" content="{{article_publisher}}" />
+    <meta property="article:author" content="{{article_author}}" />
+    <meta property="fb:app_id" content="{{fb_id}}" />
+    <meta property="og:image" content="{{seo_thumbnail}}" />
+    <meta property="og:image:secure_url" content="{{seo_thumbnail}}" />
+
+    <link rel="shortcut icon" type="image/png" href="{{favicon}}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header-bar-menu.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/about.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="{% static 'css/prism.css' %}" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="nav-container"></div>
+    <div class="parent-container">
+        <div class="profile-container">
+            <img src="{{profile_picture}}" alt="Anshuman Pattnaik" class="profile-picture">
+        </div>
+        <div class="author-full-bio">{{about_me|safe}}</div>
+    </div>
+    <div class="footer-container">
+        <iframe src="/footer/" frameborder="0" width="100%" scrolling="no"></iframe>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/constants.js' %}"></script>
+    <script src="{% static 'js/fetchContractor.js' %}"></script>
+    <script src="{% static 'js/nav_bar.js' %}"></script>
+</body>

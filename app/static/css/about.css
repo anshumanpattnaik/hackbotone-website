@@ -1,0 +1,38 @@
+body {
+    background-color: #fff;
+}
+.parent-container {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5em;
+}
+.author-full-bio {
+    width: 70vw;
+    line-height: 35px;
+    margin-top: 1em;
+}
+.profile-container {
+    width: 70vw;
+    height: auto;
+    margin-top: 3em;
+}
+.profile-picture {
+    height: 10em;
+}
+
+@media only screen and (max-width: 1000px) {
+    .parent-container {
+        margin-top: 2em;
+    }
+    .author-full-bio {
+        width: 90vw;
+    }
+    .profile-container {
+        width: 90vw;
+    }
+    .profile-picture {
+        height: 8em;
+    }
+}
